@@ -1,5 +1,5 @@
 {
-  "name": "student-statistics-back-end",
+  "name": "social-media-api-back-end",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -16,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^2.5.11",
+    "express": "^4.21.0",
     "mongoose": "^8.5.3"
   },
   "devDependencies": {
