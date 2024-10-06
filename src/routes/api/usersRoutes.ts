@@ -24,4 +24,4 @@ router.route('/:userId/friend').put(addFriend);
 
 router.route('/:userId/friend/:friendId').delete(deleteFriend);
 
-export { router as userRouter};
+export { router as usersRoutes};
