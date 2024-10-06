@@ -1,37 +1,27 @@
-// import { Router } from 'express';
-// import User from '../../models/User'; // Ensure this path is correct and the file exists
+import { Router } from "express";
+const router = Router();
+import {
+    getAllUsers,
+    getUserById,
+    createUser,
+    updateUser,
+    deleteUser,
+    addFriend,
+    deleteFriend,
+} from "../../controllers/usersControllers.js";
 
-// const router = Router();
+// route for /api/users endpoint for getting all the documents in the collection or adding a document to the collection
+// use '/' when I want to access users
+router.route('/').get(getAllUsers).post(createUser);
 
-// // all of these routes are PREFIXED with '/api/users'
-// /*router.get('/', (_req, res) => {
+//route for the /api/users/:userId endpoing for getting, updating, and deleting documents by id
+// use '/:userId' to access the object components insides the document
+router.route('/:userId').get(getUserById).put(updateUser).delete(deleteUser);
 
-//     // We make our QUERY to our DB
-//     User.find({}, (err, data) => {
-//         if(err) {
-//             throw Error
-//         }
-//         console.log(data)
-//         res.status(200).json(data)
-//     })
-// })
-// */
-// // all of these routes are PREFIXED with '/api/users'
-// router.get('/', async (_req, res) => {
+//route for the /ap/user/:useriD/friend that will  add a friend to the user
+// i used put because its an update on the user by id, but if error try post instead since its a new friend
+router.route('/:userId/friend').put(addFriend);
 
-//     // We make our QUERY to our DB
-//     let data = await User.find();
+router.route('/:userId/friend/:friendId').delete(deleteFriend);
 
-//     res.status(200).json(data);
-// })
-
-// // all of these routes are PREFIXED with '/api/users'
-// router.post('/', async (req, res) => {
-//     console.log("incoming data: ", req.body);
-//     // We make our QUERY to our DB
-//    // let data = await User.create(req.body);
-
-//     res.status(200).json({ msg: "User Created "});
-// })
-
-// export default router;
+export { router as userRouter};
