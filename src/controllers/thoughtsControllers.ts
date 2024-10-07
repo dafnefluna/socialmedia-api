@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 // import { ObjectId } from 'mongodb';
-import { User, Thought } from "../models/index";
+import { User, Thought } from "../models/index.js";
 
 // todo: write a function to get all thoughts
 export const getAllThoughts = async (_req: Request, res: Response) => {

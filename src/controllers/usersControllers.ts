@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 // import { ObjectId } from 'mongodb';
-import { User,} from "../models/index";
+import { User,} from "../models/index.js";
 
 // todo: write a function to get all users
 export const getAllUsers = async (_req: Request, res: Response) => {

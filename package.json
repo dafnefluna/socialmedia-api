@@ -1,5 +1,5 @@
 {
-  "name": "socialmedia-api",
+  "name": "socialmedia_api",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -8,7 +8,6 @@
     "build": "npx tsc",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "node dist/seeds/index.js",
     "render-build": "npm install && npm run build",
     "render-start": "npm run seed && npm run start"
   },

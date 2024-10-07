@@ -8,7 +8,7 @@ import {
     deleteThought,
     addReaction,
     removeReaction
-} from '../../controllers/thoughtsControllers';
+} from '../../controllers/thoughtsControllers.js';
 
 // /api/thoughts endpoing for getiing all the documents in the collectiong and adding to them
 router.route('/').get(getAllThoughts).post(createThought);
