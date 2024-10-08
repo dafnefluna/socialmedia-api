@@ -43,8 +43,8 @@ export const createThought = async (req: Request, res: Response) => {
         // res.json({ newThought });
 
         // find user by id and update the user with the new thought
-        const userId = req.params.id;
-        const user = await User.findByIdAndUpdate(userId, { $push: { thoughts: newThought._id } }, { new: true });
+        const userId = req.body.userId;
+        const user = await User.findOneAndUpdate({_id: userId}, { $push: { thoughts: newThought._id } }, { new: true });
 
         if (!user) {
             return res.status(404).json({ message: "User not found" })

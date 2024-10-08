@@ -5,7 +5,7 @@ import { Schema, Types, model, type Document } from 'mongoose';
 interface IReaction extends Document {
     reactionId: Schema.Types.ObjectId,
     reactionBody: string;
-    username: Schema.Types.ObjectId,
+    username: string,
     createdAt: Date,
 }
 // todo: thought interface
@@ -13,9 +13,9 @@ interface IReaction extends Document {
 interface IThought extends Document {
     thoughtText: string, 
     createdAt: Date,
-    username: Schema.Types.ObjectId, 
+    username:string, 
     // not an array bc only one user can make a thought
-    reactions?: Schema.Types.ObjectId[], 
+    reactions?: IReaction[], 
     // this will be an array of nested documenteds with the reactionSchema
 }
 
@@ -33,8 +33,7 @@ const reactionSchema = new Schema<IReaction>(
             maxlength: 128,
         },
         username: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
+            type: String,
             required: true,
         },
         createdAt: {
@@ -64,8 +63,7 @@ const thoughtSchema = new Schema<IThought>(
             get: (timestamp: Date) => new Date(timestamp),
         },
         username: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
+            type: String,
             required: true,
         },
         reactions: [reactionSchema],

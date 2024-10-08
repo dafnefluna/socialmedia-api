@@ -16,12 +16,11 @@ router.route('/').get(getAllUsers).post(createUser);
 
 //route for the /api/users/:userId endpoing for getting, updating, and deleting documents by id
 // use '/:userId' to access the object components insides the document
-router.route('/:userId').get(getUserById).put(updateUser).delete(deleteUser);
-
+router.route('/:id').get(getUserById).put(updateUser).delete(deleteUser);
 //route for the /ap/user/:useriD/friend that will  add a friend to the user
 // i used put because its an update on the user by id, but if error try post instead since its a new friend
-router.route('/:userId/friend').put(addFriend);
+router.route('/:id/friend').put(addFriend);
 
-router.route('/:userId/friend/:friendId').delete(deleteFriend);
+router.route('/:id/friend/:friendId').delete(deleteFriend);
 
 export { router as usersRoutes};

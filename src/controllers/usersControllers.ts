@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-// import { ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { User,} from "../models/index.js";
 
 // todo: write a function to get all users
@@ -22,8 +22,9 @@ export const getAllUsers = async (_req: Request, res: Response) => {
 
 export const getUserById = async (req: Request, res: Response) => {
     try {
-        const userId = req.params._id;
+        const userId = req.params.id
         const user = await User.findById(userId).populate('thoughts').populate('friends');
+        console.log(userId);
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -51,7 +52,7 @@ export const createUser = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
     try {
         // I think that my id is not matching with the model id 10/6/24
-        const userId = req.params._id;
+        const userId = req.params.id;
         const updateData = req.body;
         const user = await User.findByIdAndUpdate(userId, updateData, {new: true});
 
@@ -68,7 +69,7 @@ export const updateUser = async (req: Request, res: Response) => {
 // todo: write a function to delete a user by its _id
 export const deleteUser = async ( req: Request, res: Response) => {
     try {
-        const userId = req.params._id;
+        const userId = req.params.id;
         const user = await User.findOneAndDelete({ _id: userId });
 
         if (!user) {
@@ -87,18 +88,20 @@ export const deleteUser = async ( req: Request, res: Response) => {
 
 export const addFriend = async (req: Request, res: Response) => {
     try{
+        console.log(req.params);
+        console.log(req.body);
         // my idea: find the user that will have an friend added and update them with another user as the friend. so those would be two seperate functions? can I use the function above?
-        const userId = req.params._id;
-        const friendId = req.body.friendId;
+        const userId = new ObjectId(req.params.id);
+        const friendId = new ObjectId(req.body.friendId);
 
         // make sure the friend and user are not the same id
         // friendid cannot equal user id and has to go first than the await function to ensure that it is valid
-        if (!friendId || userId === friendId) {
+        if (!friendId || userId !== friendId) {
             return res.status(400).json({message: 'Invalid friend ID'});
         }
 
         // similar to the updateuser but instead of req.body its going to be req.body with friend id. 
-        const user = await User.findByIdAndUpdate( userId, {$addToSet: {friends: friendId}}, {new: true});
+        const user = await User.findOneAndUpdate( {_id: userId}, {$addToSet: {friends: friendId}}, {new: true});
 
         if (!user) {
             return res.status(404).json({message: 'User not found'})
@@ -106,6 +109,7 @@ export const addFriend = async (req: Request, res: Response) => {
         return res.json({user});
 
     } catch (err) {
+        console.log(err);
         return res.status(500).json(err);
     }
 };
@@ -113,14 +117,14 @@ export const addFriend = async (req: Request, res: Response) => {
 // todo: write a function to DELETE, a friend from its users friends list (this is related to anothre subdocument in User
 export const deleteFriend = async ( req: Request, res: Response) => {
     try {
-        const userId = req.params._id;
-        const friendId = req.body.friendId;
+        const userId = req.params.id;
+        const friendId = req.params.friendId;
 
-        if (!friendId || userId === friendId) {
+        if (!friendId || userId !== friendId) {
             return res.status(400).json({message: 'Invalid friend ID'});
         }
 
-        const user = await User.findByIdAndUpdate(userId, {$pull: { friends: friendId}}, {new: true});
+        const user = await User.findOneAndUpdate({_id: userId}, {$pull: { friends: friendId }}, {new: true});
 
         if (!user) {
             return res.status(404).json({message: 'User not found'})
@@ -128,6 +132,7 @@ export const deleteFriend = async ( req: Request, res: Response) => {
         return res.json({user});
 
     } catch (err: any) {
+        console.log(err)
         return res.status(500).json({message: err.message});
     }
 };
