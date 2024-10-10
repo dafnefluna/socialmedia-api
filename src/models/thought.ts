@@ -1,9 +1,9 @@
-import { Schema, Types, model, type Document } from 'mongoose';
+import { Schema,Types, model, type Document } from 'mongoose';
 
 // todo: reactions interface
 // instructions say username string. I chose to do schema.types.objectid for the relationship 10/5/24 at 3pm
 interface IReaction extends Document {
-    reactionId: Schema.Types.ObjectId,
+    reactionId: Schema.Types.ObjectId,//
     reactionBody: string;
     username: string,
     createdAt: Date,
@@ -24,8 +24,8 @@ interface IThought extends Document {
 const reactionSchema = new Schema<IReaction>(
     {
         reactionId: {
-            type: Schema.Types.ObjectId,
-            default: () => new Types.ObjectId(),
+            type: Schema.Types.ObjectId, //
+            default: () => new Types.ObjectId(),//
         },
         reactionBody: {
             type: String,
@@ -44,7 +44,7 @@ const reactionSchema = new Schema<IReaction>(
     },
     {
         toJSON: { getters: true },
-        _id: false,
+        id: false,
     }
 )
 
@@ -55,7 +55,7 @@ const thoughtSchema = new Schema<IThought>(
             type: String, 
             required: true,
             minlength: 1,
-            maxlength: 128,
+            maxlength: 280,
         },
         createdAt:{
             type: Date,
@@ -73,7 +73,7 @@ const thoughtSchema = new Schema<IThought>(
     }
 );
 
-// this  will become thoughts model/table, lowercase, plurals
+// this  will become thoughts mhttp://localhost:3001/api/thoughts/6705d9686047a68addb1f3afodel/table, lowercase, plurals
 const Thought = model<IThought>('Thought', thoughtSchema);
 
 export default Thought;

@@ -36,7 +36,7 @@ export const getUserById = async (req: Request, res: Response) => {
     }
 };
 
-// todo: write a function that will post (or create) a new user
+// todo: write a function that wilcl post (or create) a new user
 export const createUser = async (req: Request, res: Response) => {
     try {
         const user = await User.create(req.body);
@@ -88,8 +88,8 @@ export const deleteUser = async ( req: Request, res: Response) => {
 
 export const addFriend = async (req: Request, res: Response) => {
     try{
-        console.log(req.params);
-        console.log(req.body);
+        // console.log(req.params);
+        // console.log(req.body);
         // my idea: find the user that will have an friend added and update them with another user as the friend. so those would be two seperate functions? can I use the function above?
         const userId = new ObjectId(req.params.id);
         const friendId = new ObjectId(req.body.friendId);

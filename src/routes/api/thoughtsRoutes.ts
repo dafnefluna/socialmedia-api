@@ -20,7 +20,7 @@ router.route('/:thoughtId').get(getThoughtById).put(updateThought).delete(delete
 // i used post because its an update on the user by id, but if error try put instead since its a new friend
 router.route('/:thoughtId/reaction').post(addReaction);
 
-router.route('/:thoughId/reaction/:reaction').delete(removeReaction);
+router.route('/:thoughtId/reaction/:reactionId').delete(removeReaction);
 
 export { router as thoughtsRouter};
 
