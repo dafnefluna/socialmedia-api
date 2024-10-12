@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ObjectId } from 'mongodb';
+// import { ObjectId } from 'mongodb';
 import { User, Thought } from "../models/index.js";
 
 // todo: write a function to get all thoughts
@@ -128,7 +128,7 @@ export const removeReaction = async (req: Request, res: Response) => {
         // console.log("_________", reactionId);
         const thought = await Thought.findOneAndUpdate( 
             { _id: req.params.thoughtId },
-            { $pull: { reactions: new ObjectId(req.params.reactionId)}}, 
+            { $pull: { reactions: {reactionId: req.params.reactionId}}}, 
             { new: true });
             console.log(req.params.thoughtId);
             console.log(req.params.reactionId);
